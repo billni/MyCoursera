@@ -7,6 +7,9 @@ rankall <- function(outcome, num="best"){
   
   ## appear state list uniquely that was sorted in alphabetical order
   statelist <- sort(unique(hdata$State))
+  ## initial result
+  result <- data.frame(NA, statelist, NA, NA)
+  names(result) <- c("hospital", "state", "ill", "rate")
       
   ## appear ill vector with respective name    
 	mortality <- c(11,17,23)
@@ -14,9 +17,7 @@ rankall <- function(outcome, num="best"){
 	      
 	## appear data frame with 3 columns , hospital_name , state name and mortality rate
 	amd <- hdata[, c(2, 7, mortality[outcome])]	   
-	
-	result <- data.frame(stringsAsFactors = F)	
-	
+		
   for (state in statelist) {
     ## mortality data frame in each state     
     esd <- amd[amd$State == state, ]        
@@ -28,18 +29,10 @@ rankall <- function(outcome, num="best"){
   	esd <- esd[order(esd[,4], esd[,1]),]  	
   	
   	## assemble result data frame
-  	
-  	if (num > nrow(esd)) {   	
-  	  x <- c(NA, state, NA, NA)  	  	   
-  		result <- rbind(result, x)  	
-  		browser()	
-  		names(result) <- names(esd)
-  	} else {
-  		result <- rbind(result, esd[num,])
-  		names(result) <- names(esd)
+  	if (num <= nrow(esd)) {      	
+  	   result[result$state==state,] <- esd[num,]
   	}
   }    
-  names(result) <- c("hospital", "state", "ill", "rate")
   return(result)
 }
 
