@@ -31,7 +31,7 @@ ssqcompute <- function(o = data.frame(), lastrownum=nrow(o)) {
 
 ## target is a number to be tested.
 ## pre is a number to look up previous period
-ssqtable <- function(o = data.frame(), target=1, pre=1, prob=0.8) {
+ssqquan <- function(o = data.frame(), target=1, pre=1, prob=0.8) {
 	pos <- which(o[,2]==target)	
 	v <- NULL	
 	ret <- vector()	
@@ -39,10 +39,53 @@ ssqtable <- function(o = data.frame(), target=1, pre=1, prob=0.8) {
 			pos <- pos[pos-i>0]
 			v <- o[pos-i, 2]
 			x <- table(v)
-		  y <- which(x==quantile(x, prob))
+		  #y <- which(x==quantile(x, prob))
+		  y<- x[which(x/sum(x)==prob)]
+		  ret <- c(ret, y)
+	}
+	unique(names(ret))
+}
+##Compute the probability of real value in estimated value
+ssqprob <- function(o = data.frame(), target=1, pre=1) {
+	pos <- which(o[,2]==target)	
+	v <- NULL	
+	ret <- vector()	
+	for(i in 1:pre){   
+			pos <- pos[pos-i>0]
+			v <- o[pos-i, 2]
+			x <- table(v)		  
+			ret <- x[[which(names(x)==target)]]/sum(x)		  
+	}
+	ret
+}
+
+ssqmax <- function(o = data.frame(), target=1, pre=1) {
+	target <- abs(target-median(o$B))
+	pos <- which(o[,2]==target)	
+	v <- NULL	
+	ret <- vector()	
+	for(i in 1:pre){   
+			pos <- pos[pos-i>0]
+			v <- o[pos-i, 2]
+			x <- table(v)
+ 		  y <- which(x==max(x))		  
 		  ret <- c(ret, y)
 	}
 	unique(names(ret))
 }
 
+ssqmin <- function(o = data.frame(), target=1, pre=1) {
+	target <- abs(target-median(o$B))
+	pos <- which(o[,2]==target)	
+	v <- NULL	
+	ret <- vector()	
+	for(i in 1:pre){   
+			pos <- pos[pos-i>0]
+			v <- o[pos-i, 2]
+			x <- table(v)
+ 		  y <- which(x==min(x))		  
+		  ret <- c(ret, y)
+	}
+	unique(names(ret))
+}
 
