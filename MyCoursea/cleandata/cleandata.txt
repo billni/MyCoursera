@@ -1,0 +1,36 @@
+> x
+   num letter
+1   15      a
+2   16      b
+3   17      c
+4   18      d
+5   19      e
+6   20      f
+7   21      g
+8   22      h
+9   23      i
+10  24      j
+11  25      k
+12  26      l
+13  27      m
+14  28      n
+15  29      o
+16  30      p
+
+> y
+   num letter
+1   21      a
+2   22      b
+3   23      c
+4   24      d
+5   25      e
+6   26      f
+7   27      g
+8   28      h
+9   50      w
+10  51      v
+
+> y[which(!(y$num %in% x$num)),]
+   num letter
+9   50      w
+10  51      v
