@@ -10,7 +10,7 @@ cleanmobile <- function() {
 	## Read data that need cleaned from csv
 	unclean<-read.table("csv/unclean.txt", header=F,col.names="mobile")
 	
-	## verify data if match with dbmobile
+	## verify whether data match with dbmobile
 	cleaned <- data.frame(unclean[which(!(unclean$mobile %in% dbmobile$mobile)),])
         names(cleaned) <- "mobile"
         print(paste("Mobile rows: ", nrow(cleaned), ", Take over(MB): ",format(object.size(cleaned), "Mb")))
