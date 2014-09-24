@@ -3,8 +3,8 @@ cleanmobile <- function() {
 	## Read data from db
 	myconn <- odbcConnect("tstest", uid="tsdev", pwd="uat123")
 	dbmobile <- sqlQuery(myconn, "select mobilephone from CCP_CONTACT")
-  names(dbmobile) <- "mobile"
-  close(myconn)
+        names(dbmobile) <- "mobile"
+        close(myconn)
 	print(paste("Mobile rows: ", nrow(dbmobile), ", Take over(MB): ",format(object.size(dbmobile), "Mb")))
 	
 	## Read data that need cleaned from csv
@@ -12,10 +12,10 @@ cleanmobile <- function() {
 	
 	## verify data if match with dbmobile
 	cleaned <- data.frame(unclean[which(!(unclean$mobile %in% dbmobile$mobile)),])
-  names(cleaned) <- "mobile"
-  print(paste("Mobile rows: ", nrow(cleaned), ", Take over(MB): ",format(object.size(cleaned), "Mb")))
+        names(cleaned) <- "mobile"
+        print(paste("Mobile rows: ", nrow(cleaned), ", Take over(MB): ",format(object.size(cleaned), "Mb")))
   
-  ## write cleaned data into csv
-  write.csv(cleaned, "csv/cleaned.csv")
+       ## write cleaned data into csv
+       write.csv(cleaned, "csv/cleaned.csv")
 }
 
